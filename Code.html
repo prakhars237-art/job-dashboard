@@ -1,0 +1,2035 @@
+​<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Gemini Spark | Job Match Portal — Arpit Yadav</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-dark: #172554;
+      --primary-light: #3b82f6;
+      --accent: #0284c7;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-card: #243248;
+      --surface-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 80px;
+      touch-action: manipulation;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #091325 0%, #172554 50%, #1e3a8a 100%);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 24px 0 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .title-area {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .title-area h1 {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: #ffffff;
+    }
+
+    .spark-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      color: #0f172a;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .title-area p.subtitle {
+      color: #94a3b8;
+      font-size: clamp(13px, 2.5vw, 15px);
+      margin-top: 4px;
+    }
+
+    .profile-meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .meta-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+    .meta-pill strong { color: #ffffff; }
+    .meta-pill.highlight {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #7dd3fc;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .header-actions {
+        align-items: flex-end;
+        width: auto;
+      }
+    }
+
+    .schedule-badge {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #34d399;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    .schedule-badge .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      flex-shrink: 0;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .btn-row { width: auto; }
+    }
+
+    .action-btn {
+      background: #2563eb;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      border: 1px solid #3b82f6;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .action-btn:hover { background: #1d4ed8; }
+    .action-btn.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .action-btn.secondary:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .kpi-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--primary-light);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      font-size: clamp(20px, 3.5vw, 26px);
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .kpi-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.3;
+    }
+
+    /* Controls Panel */
+    .controls-panel {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .controls-panel {
+        padding: 20px;
+        margin-bottom: 28px;
+      }
+    }
+
+    .search-row {
+      margin-bottom: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: #ffffff;
+      font-size: 16px;
+      outline: none;
+      transition: border 0.2s;
+      min-height: 48px;
+    }
+    .search-input:focus { border-color: var(--primary-light); }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .filter-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+      }
+    }
+
+    .filter-item label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .filter-select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #f8fafc;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+      min-height: 44px;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 36px;
+    }
+    .filter-select:focus { border-color: var(--primary-light); }
+
+    .results-count-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .clear-filters-btn {
+      background: transparent;
+      border: none;
+      color: #38bdf8;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 6px 10px;
+      text-decoration: underline;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Job Cards Grid */
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    @media (min-width: 900px) {
+      .jobs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (min-width: 1300px) {
+      .jobs-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .job-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    }
+
+    @media (min-width: 768px) {
+      .job-card { padding: 20px; }
+    }
+
+    .job-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      border-color: #3b82f6;
+    }
+
+    .job-card.top5-highlight {
+      border-left: 5px solid #38bdf8;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .card-rank {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .score-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .score-excellent { background: #14532d; color: #4ade80; border: 1px solid #22c55e; }
+    .score-strong { background: #1e3a8a; color: #60a5fa; border: 1px solid #3b82f6; }
+    .score-good { background: #713f12; color: #fde047; border: 1px solid #eab308; }
+
+    .job-title {
+      font-size: clamp(15px, 2.5vw, 17px);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+
+    .job-company {
+      font-size: 14px;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-bottom: 12px;
+    }
+
+    .job-meta-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .job-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .skills-section {
+      margin-bottom: 12px;
+    }
+
+    .skills-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .skill-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .skill-matched {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .skill-missing {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .ai-explanation {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
+      color: #e2e8f0;
+      margin-bottom: 10px;
+      border-left: 3px solid #3b82f6;
+      line-height: 1.4;
+    }
+    .ai-explanation strong { color: #60a5fa; }
+
+    .concern-box {
+      background: rgba(245, 158, 11, 0.08);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #fbbf24;
+      margin-bottom: 14px;
+      border-left: 3px solid #f59e0b;
+      line-height: 1.4;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    @media (min-width: 480px) {
+      .card-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .status-select {
+      background: #0f172a;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #f8fafc;
+      outline: none;
+      cursor: pointer;
+      min-height: 44px;
+      width: 100%;
+    }
+    @media (min-width: 480px) {
+      .status-select {
+        width: auto;
+        flex: 1;
+        max-width: 170px;
+      }
+    }
+
+    .apply-btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 44px;
+      width: 100%;
+    }
+    @media (min-width: 480px) {
+      .apply-btn { width: auto; }
+    }
+    .apply-btn:hover { opacity: 0.9; }
+
+    
+    .job-card.is-inactive {
+      opacity: 0.55;
+      filter: grayscale(0.4);
+      border-color: #475569;
+    }
+    .job-card.is-inactive:hover {
+      opacity: 0.9;
+      filter: none;
+    }
+    .status-badge-inactive {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255,255,255,0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    
+    /* Insights Section */
+    .insights-panel {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-top: 28px;
+    }
+
+    @media (min-width: 768px) {
+      .insights-panel {
+        padding: 28px;
+        margin-top: 40px;
+      }
+    }
+
+    .insights-panel h2 {
+      font-size: clamp(18px, 3vw, 22px);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .insights-panel p.insights-sub {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .intelligence-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .intelligence-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .intelligence-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+    }
+
+    .intel-card {
+      background: var(--surface-card);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--surface-border);
+    }
+
+    .intel-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .intel-list { list-style: none; }
+
+    .intel-list li {
+      font-size: 12px;
+      color: #cbd5e1;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      line-height: 1.4;
+    }
+    .intel-list li strong { color: #ffffff; }
+
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 99;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-top">
+        <div class="title-area">
+          <h1>
+            Gemini Spark | Job Match Portal
+            <span class="spark-badge">Live Automation</span>
+          </h1>
+          <p class="subtitle">AI-Powered Career Intelligence, Automated Match Scoring & Application Tracking</p>
+          <div class="profile-meta-pills">
+            <div class="meta-pill">Candidate: <strong>Arpit Yadav</strong></div>
+            <div class="meta-pill">Experience: <strong>~1.3 Years Full-Time (0–2 Years SDE-1 / Early Career)</strong></div>
+            <div class="meta-pill highlight">Locations: <strong>Noida & Pune</strong></div>
+            <div class="meta-pill highlight">Modes: <strong>Hybrid & WFH</strong></div>
+            <div class="meta-pill highlight">Package: <strong>₹8 LPA+ (Uncapped)</strong></div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="schedule-badge">
+            <span class="pulse-dot"></span>
+            Daily Automation Active (9:00 AM IST)
+          </div>
+          <div class="btn-row">
+            <a href="https://docs.google.com/spreadsheets/d/1E6eu5vzQ95InC8XUzFQ5LLP48oWjALIyU8gfEJWDpVI/edit" target="_blank" class="action-btn secondary">
+              📊 Open Google Sheet
+            </a>
+            <a href="https://drive.google.com/file/d/1ic4qa4EEfj55-mX98ts4nbtjnWgfuFLB/view?usp=drivesdk" target="_blank" class="action-btn">
+              📄 Active Resume
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- KPI Section -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Filtered Jobs</div>
+        <div class="kpi-value" id="kpiFiltered">44</div>
+        <div class="kpi-desc">0–2 YOE (Noida, Pune, WFH)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Top 25 Ranked</div>
+        <div class="kpi-value" id="kpiTotal">25</div>
+        <div class="kpi-desc">Scored with 100-point model</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Top Match</div>
+        <div class="kpi-value" id="kpiTopMatch">96%</div>
+        <div class="kpi-desc">Spektra Systems (Remote WFH)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Average Score</div>
+        <div class="kpi-value" id="kpiAvgMatch">88.6%</div>
+        <div class="kpi-desc">Across all 25 positions</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Location Fit</div>
+        <div class="kpi-value">100%</div>
+        <div class="kpi-desc">Noida (10) · Pune (7) · WFH (8)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Salary Alignment</div>
+        <div class="kpi-value">₹8L - ₹22L</div>
+        <div class="kpi-desc">100% ≥ ₹8 LPA baseline</div>
+      </div>
+    </div>
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="search-row">
+        <div class="search-box">
+          <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search company, role, or skill (Next.js, Node.js, Pune)...">
+        </div>
+      </div>
+      <div class="filter-grid">
+        <div class="filter-item">
+          <label>Location</label>
+          <select id="locFilter" class="filter-select">
+            <option value="all">All Locations (Noida, Pune, Remote)</option>
+            <option value="Noida">Noida / NCR</option>
+            <option value="Pune">Pune</option>
+            <option value="Remote">Fully Remote / WFH</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Match Score</label>
+          <select id="scoreFilter" class="filter-select">
+            <option value="all">All Scores</option>
+            <option value="90">90% - 100% (Excellent)</option>
+            <option value="80">80% - 89% (Strong)</option>
+            <option value="70">70% - 79% (Good)</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Work Mode</label>
+          <select id="modeFilter" class="filter-select">
+            <option value="all">All Modes (Hybrid & WFH)</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Remote">Fully Remote / Work From Home</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Application Status</label>
+          <select id="statusFilter" class="filter-select">
+            <option value="all">All Statuses</option>
+            <option value="active">Active Leads (New / Saved / Applied)</option>
+            <option value="New Match">New Match</option>
+            <option value="Saved">Saved</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview Scheduled">Interview Scheduled</option>
+            <option value="Offer">Offer</option>
+            <option value="Expired / Closed">Expired / Closed</option>
+            <option value="Link Broken">Link Broken / 404</option>
+            <option value="Not Interested">Not Interested</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Sort By</label>
+          <select id="sortSelect" class="filter-select">
+            <option value="score-desc">Match Score (Highest First)</option>
+            <option value="rank-asc">Rank (1 to 25)</option>
+            <option value="company-asc">Company Name</option>
+            <option value="date-desc">Posted Date (Newest)</option>
+          </select>
+        </div>
+      </div>
+      <div class="results-count-bar">
+        <div>Showing <strong id="displayedCount">25</strong> of 25 Opportunities</div>
+        <button id="clearFiltersBtn" class="clear-filters-btn">Reset Filters</button>
+      </div>
+    </div>
+
+    <!-- Job Cards Grid -->
+    <div class="jobs-grid" id="jobsGrid"></div>
+
+    <!-- Market Intelligence Section -->
+    <div class="insights-panel">
+      <h2>🧠 Market Intelligence & Career Strategy</h2>
+      <p class="insights-sub">Focused on 0–2 YOE Hybrid & Work From Home opportunities in Noida, Pune, and Remote India (₹8 LPA+)</p>
+      
+      <div class="intelligence-grid">
+        <div class="intel-card">
+          <h3 style="color: #4ade80;">✅ Keep Doing (Strengths)</h3>
+          <ul class="intel-list">
+            <li><strong>Next.js 14 App Router & React</strong>: 100% demand across early career roles.</li>
+            <li><strong>Full-Stack Node.js & TypeScript</strong>: Strong competitive edge for SDE-1 roles (LSEG, FundsIndia).</li>
+            <li><strong>Web Performance & Vitals</strong>: Virtualization and latency tuning make you stand out.</li>
+            <li><strong>Security Remediation</strong>: SSO, RBAC, and VAPT directly requested in enterprise SaaS.</li>
+          </ul>
+        </div>
+
+        <div class="intel-card">
+          <h3 style="color: #60a5fa;">📈 Improve (Positioning)</h3>
+          <ul class="intel-list">
+            <li><strong>Highlight Hybrid/Remote Readiness</strong>: Emphasize autonomous delivery and async PR reviews.</li>
+            <li><strong>Lead with Agentic AI UI Work</strong>: Put the <em>mPulse</em> platform bullet first in experience.</li>
+            <li><strong>Specify Microservices Scope</strong>: Highlight BullMQ, Redis, and idempotent architectures.</li>
+          </ul>
+        </div>
+
+        <div class="intel-card">
+          <h3 style="color: #fde047;">🎯 Learn (High-Value Gaps)</h3>
+          <ul class="intel-list">
+            <li><strong>LangChain.js / LangGraph</strong>: High-frequency requirement in AI roles (Photon, Spektra).</li>
+            <li><strong>Streaming AI Interfaces</strong>: Vercel AI SDK, Server-Sent Events (SSE), and WebSockets.</li>
+            <li><strong>Model Context Protocol (MCP)</strong>: Rapidly emerging standard for tool-calling agent systems.</li>
+          </ul>
+        </div>
+
+        <div class="intel-card">
+          <h3 style="color: #c084fc;">🔭 Watch (Emerging)</h3>
+          <ul class="intel-list">
+            <li><strong>Supabase Edge Functions</strong>: Trending in remote Next.js startups (Sirsonite, Spektra).</li>
+            <li><strong>pgvector with Prisma ORM</strong>: Storing embeddings directly in PostgreSQL for vector search.</li>
+            <li><strong>Browser-side AI Models</strong>: ONNX Runtime Web for local client inference.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button id="scrollTopBtn" class="scroll-top-btn" title="Back to Top">↑</button>
+
+  <script>
+    // Embedded baseline jobs (acts as immediate cache and offline fallback)
+    let jobsData = [
+  {
+    "company": "Spektra Systems",
+    "title": "AI-Native Software Engineer (Next.js, React, TypeScript APIs)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b915\u201322 LPA",
+    "type": "Full-time",
+    "posted": "2026-11-01",
+    "source": "The Job Company",
+    "orig_url": "https://thejobcompany.co.in/frontend/job_details?job_id=6554",
+    "app_url": "https://thejobcompany.co.in/frontend/job_details?job_id=6554",
+    "matched_skills": [
+      "Next.js",
+      "React",
+      "TypeScript APIs",
+      "Cloud AI Integration",
+      "RESTful Architecture"
+    ],
+    "missing_skills": [
+      "Python microservices"
+    ],
+    "why_matches": "High-compensation (\u20b915\u201322 LPA) work-from-home role welcoming talented 1\u20132 YOE engineers to build Next.js AI platform frontends, mirroring your mPulse experience.",
+    "concerns": "Requires disciplined self-directed sprint management.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 15,
+    "ai_score": 14,
+    "loc_score": 10,
+    "comp_score": 5,
+    "pot_score": 4,
+    "match_score": 96,
+    "rank": 1
+  },
+  {
+    "company": "Heizen",
+    "title": "Associate Software Engineer (Fullstack React / Node.js / AI)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "0\u20132 Years",
+    "salary": "\u20b98\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-28",
+    "source": "Heizen Careers",
+    "orig_url": "https://www.heizen.work/careers/associate-software-engineer",
+    "app_url": "https://www.heizen.work/careers/associate-software-engineer",
+    "matched_skills": [
+      "React.js",
+      "Node.js",
+      "TypeScript",
+      "AI Platforms",
+      "REST APIs",
+      "PostgreSQL"
+    ],
+    "missing_skills": [
+      "GraphQL Apollo"
+    ],
+    "why_matches": "AI-powered software services startup founded by ex-Microsoft/JP Morgan leaders, explicitly hiring 0\u20132 YOE engineers for full-stack AI development.",
+    "concerns": "Fast startup pace.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 15,
+    "ai_score": 13,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 5,
+    "match_score": 95,
+    "rank": 2
+  },
+  {
+    "company": "LSEG (London Stock Exchange Group)",
+    "title": "Associate Software Engineer (React / TypeScript / Node.js)",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "0\u20132 Years",
+    "salary": "\u20b910\u201315 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-30",
+    "source": "HireDoor / Careers",
+    "orig_url": "https://hiredoor.in/jobs/associate-software-engineer-23bcb4",
+    "app_url": "https://hiredoor.in/jobs/associate-software-engineer-23bcb4",
+    "matched_skills": [
+      "React.js",
+      "TypeScript",
+      "Node.js",
+      "REST APIs",
+      "FinTech / Financial Intelligence",
+      "RBAC / Security"
+    ],
+    "missing_skills": [
+      "Financial Market Data protocols"
+    ],
+    "why_matches": "Premier global financial exchange infrastructure firm in Noida hiring early-career engineers (0\u20132 YOE). Direct synergy with your Advance Mule Accounts fraud intelligence work and VAPT remediation.",
+    "concerns": "Rigorous enterprise screening rounds.",
+    "tech_score": 29,
+    "exp_score": 20,
+    "role_score": 15,
+    "ai_score": 10,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 5,
+    "match_score": 93,
+    "rank": 3
+  },
+  {
+    "company": "Photon",
+    "title": "Junior React / Next.js Developer - Agentic AI Frontend",
+    "location": "Remote / Hybrid",
+    "work_mode": "Fully Remote / Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201316 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-25",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-react-developer-frontend-developer-next-js-l-bengaluru,-karnataka-jobs.html",
+    "app_url": "https://in.indeed.com/q-react-developer-frontend-developer-next-js-l-bengaluru,-karnataka-jobs.html",
+    "matched_skills": [
+      "React.js",
+      "Next.js",
+      "Agentic AI Integration",
+      "TypeScript",
+      "Tailwind CSS",
+      "shadcn/ui"
+    ],
+    "missing_skills": [
+      "LangChain.js production deployment"
+    ],
+    "why_matches": "Builds interfaces for agentic AI applications with remote flexibility.",
+    "concerns": "Team centered in Bangalore.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 14,
+    "loc_score": 9,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 93,
+    "rank": 4
+  },
+  {
+    "company": "FundsIndia",
+    "title": "Software Development Engineer 1 (SDE 1) \u2013 React / Next.js",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-24",
+    "source": "Fomogo / Careers",
+    "orig_url": "https://hire.fomogo.in/careers/8e19710f-4884-45de-b9dd-8c952142d85b/jobs/036c969f-5814-4972-8f88-9a7aaa355d7d",
+    "app_url": "https://hire.fomogo.in/careers/8e19710f-4884-45de-b9dd-8c952142d85b/jobs/036c969f-5814-4972-8f88-9a7aaa355d7d",
+    "matched_skills": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "REST APIs",
+      "Component Architecture",
+      "Performance Tuning"
+    ],
+    "missing_skills": [
+      "React Native"
+    ],
+    "why_matches": "Specifically tailored for early-career engineers (1\u20132 YOE) building responsive, high-performance web applications with React and Next.js in a 100% remote setting.",
+    "concerns": "Fintech release cycles under regulated compliance.",
+    "tech_score": 29,
+    "exp_score": 20,
+    "role_score": 15,
+    "ai_score": 9,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 5,
+    "match_score": 92,
+    "rank": 5
+  },
+  {
+    "company": "Marctory",
+    "title": "AI LLM Frontend Developer (React.js / Next.js / TypeScript)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201318 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-05",
+    "source": "Talynce",
+    "orig_url": "https://talynce.com/jobs/722f420a-b48a-4a5e-b043-648dee511663",
+    "app_url": "https://talynce.com/jobs/722f420a-b48a-4a5e-b043-648dee511663",
+    "matched_skills": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "AI APIs"
+    ],
+    "missing_skills": [
+      "Prompt caching optimization"
+    ],
+    "why_matches": "100% remote early-career role building AI and LLM client interfaces.",
+    "concerns": "Contract or small-team arrangement.",
+    "tech_score": 27,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 13,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 92,
+    "rank": 6
+  },
+  {
+    "company": "Workforce Next",
+    "title": "Junior Full-Stack Developer (React / Next.js / Node.js)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201316 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-22",
+    "source": "Company Career Portal",
+    "orig_url": "https://wfnext.com/careers/full-stack-developer/",
+    "app_url": "https://wfnext.com/careers/full-stack-developer/",
+    "matched_skills": [
+      "React",
+      "Next.js",
+      "Node.js",
+      "REST APIs",
+      "AI Workflow Tools",
+      "TypeScript"
+    ],
+    "missing_skills": [
+      "FastAPI"
+    ],
+    "why_matches": "100% remote position building AI workflows with React and Node.js.",
+    "concerns": "Distributed global team time zones.",
+    "tech_score": 27,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 12,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 91,
+    "rank": 7
+  },
+  {
+    "company": "Surety Seven Technologies",
+    "title": "Software Development Engineer-1 (Next.js / React / Node.js)",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201312 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-13",
+    "source": "Cutshort",
+    "orig_url": "https://cutshort.io/jobs/nextjs-next-js-jobs-in-delhi-ncr-gurgaon-noida",
+    "app_url": "https://cutshort.io/jobs/nextjs-next-js-jobs-in-delhi-ncr-gurgaon-noida",
+    "matched_skills": [
+      "Next.js",
+      "React.js",
+      "Node.js",
+      "TypeScript",
+      "REST APIs"
+    ],
+    "missing_skills": [
+      "None"
+    ],
+    "why_matches": "Exact 1\u20132 years SDE-1 requirement in Noida. 100% stack alignment across Next.js, Node.js, and TypeScript.",
+    "concerns": "Package starts at \u20b98 LPA base; upper band reaches \u20b912 LPA.",
+    "tech_score": 30,
+    "exp_score": 20,
+    "role_score": 15,
+    "ai_score": 7,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 90,
+    "rank": 8
+  },
+  {
+    "company": "Storyblok",
+    "title": "SDE 1 Frontend (Next.js / React)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b912\u201320 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-22",
+    "source": "React Day Bangalore",
+    "orig_url": "https://reactday.in/jobs",
+    "app_url": "https://reactday.in/jobs",
+    "matched_skills": [
+      "Next.js",
+      "React.js",
+      "TypeScript",
+      "Performance Tuning",
+      "TanStack Query"
+    ],
+    "missing_skills": [
+      "Headless CMS plugin ecosystem"
+    ],
+    "why_matches": "All-remote global headless CMS company hiring SDE 1 frontend engineers with strong React/Next.js depth and \u20b912\u201320 LPA pay.",
+    "concerns": "Asynchronous international team collaboration.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 15,
+    "ai_score": 8,
+    "loc_score": 10,
+    "comp_score": 5,
+    "pot_score": 4,
+    "match_score": 90,
+    "rank": 9
+  },
+  {
+    "company": "Product Fusion",
+    "title": "Junior Full Stack Developer (Next.js / Node.js / AI)",
+    "location": "Pune",
+    "work_mode": "Hybrid",
+    "exp": "0\u20132 Years",
+    "salary": "\u20b98\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-20",
+    "source": "BuiltIn Pune",
+    "orig_url": "https://builtinpune.in/jobs/dev-engineering/search/react-js",
+    "app_url": "https://builtinpune.in/jobs/dev-engineering/search/react-js",
+    "matched_skills": [
+      "Next.js",
+      "React.js",
+      "Node.js",
+      "PostgreSQL",
+      "Docker",
+      "Tailwind CSS"
+    ],
+    "missing_skills": [
+      "FastAPI / Python"
+    ],
+    "why_matches": "Entry-level to junior full-stack developer role in Pune working on artificial intelligence web platforms.",
+    "concerns": "Mix of consulting and SaaS products.",
+    "tech_score": 27,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 11,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 90,
+    "rank": 10
+  },
+  {
+    "company": "Sirsonite Solutions",
+    "title": "Junior Full-Stack Developer \u2013 Next.js / React / Node.js",
+    "location": "Pune",
+    "work_mode": "Hybrid / Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-25",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-react-js-developer-,-nodejs-,-nextjs-l-pune,-maharashtra-jobs.html",
+    "app_url": "https://in.indeed.com/q-react-js-developer-,-nodejs-,-nextjs-l-pune,-maharashtra-jobs.html",
+    "matched_skills": [
+      "Next.js",
+      "React",
+      "Node.js",
+      "TypeScript",
+      "PostgreSQL / SQL",
+      "REST APIs"
+    ],
+    "missing_skills": [
+      "Supabase Edge Functions"
+    ],
+    "why_matches": "Flexible hybrid/remote role based out of Pune, matching your Next.js and Node.js full-stack capabilities.",
+    "concerns": "Continuous sprint deployment cycles.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 9,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 89,
+    "rank": 11
+  },
+  {
+    "company": "VisibilityStack",
+    "title": "Junior Full Stack Developer (Next.js / TypeScript / Cloud)",
+    "location": "Noida / Delhi NCR",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b912\u201318 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-22",
+    "source": "Cutshort",
+    "orig_url": "https://cutshort.io/jobs/nextjs-next-js-jobs-in-delhi-ncr-gurgaon-noida",
+    "app_url": "https://cutshort.io/jobs/nextjs-next-js-jobs-in-delhi-ncr-gurgaon-noida",
+    "matched_skills": [
+      "Next.js (App Router)",
+      "TypeScript",
+      "React",
+      "PostgreSQL",
+      "Docker",
+      "REST APIs",
+      "AWS"
+    ],
+    "missing_skills": [
+      "GraphQL"
+    ],
+    "why_matches": "Regional hybrid match for a 1\u20132 YOE Next.js developer with SQL and cloud experience.",
+    "concerns": "Startup setting with fast-paced delivery expectations.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 9,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 89,
+    "rank": 12
+  },
+  {
+    "company": "Capticks",
+    "title": "Full Stack Developer (Node.js, React, Next.js & AI/ML)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201316 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-24",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-react-js,mern,nodejs,nextjs-l-remote-jobs.html",
+    "app_url": "https://in.indeed.com/q-react-js,mern,nodejs,nextjs-l-remote-jobs.html",
+    "matched_skills": [
+      "React.js",
+      "Next.js",
+      "Node.js",
+      "TypeScript",
+      "REST APIs",
+      "AI Product UX"
+    ],
+    "missing_skills": [
+      "Python PyTorch"
+    ],
+    "why_matches": "AI-first product engineering company welcoming 1\u20132 YOE full stack engineers.",
+    "concerns": "Early-stage startup role.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 11,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 89,
+    "rank": 13
+  },
+  {
+    "company": "GENI360",
+    "title": "Frontend Engineer (React, TypeScript, Intelligent AI Agents)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201316 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-19",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-react-js-developer,nextjs,gen-ai-jobs.html",
+    "app_url": "https://in.indeed.com/q-react-js-developer,nextjs,gen-ai-jobs.html",
+    "matched_skills": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "AI Agent Interfaces",
+      "REST APIs"
+    ],
+    "missing_skills": [
+      "WebSockets streaming"
+    ],
+    "why_matches": "Fully remote role building responsive agent dashboards for early career talent.",
+    "concerns": "Compensation bracket is mid-tier.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 12,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 89,
+    "rank": 14
+  },
+  {
+    "company": "BeamX Tech Labs",
+    "title": "Full Stack Developer (Node.js + React / Next.js)",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b99\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-18",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-react-next-js-full-stack-node-jobs.html",
+    "app_url": "https://in.indeed.com/q-react-next-js-full-stack-node-jobs.html",
+    "matched_skills": [
+      "Next.js",
+      "React.js",
+      "Node.js",
+      "TypeScript",
+      "MySQL / PostgreSQL",
+      "REST APIs"
+    ],
+    "missing_skills": [
+      "AWS Lambda serverless"
+    ],
+    "why_matches": "Noida-based hybrid role hiring early-career developers with hands-on Node.js and Next.js experience.",
+    "concerns": "Small agile engineering squad.",
+    "tech_score": 28,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 8,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 88,
+    "rank": 15
+  },
+  {
+    "company": "Macgence",
+    "title": "Full Stack Developer \u2013 React & Next.js",
+    "location": "Noida",
+    "work_mode": "Hybrid / WFH",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b912\u201318 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-29",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-work-from-home-react-developer-l-noida,-uttar-pradesh-jobs.html",
+    "app_url": "https://in.indeed.com/q-work-from-home-react-developer-l-noida,-uttar-pradesh-jobs.html",
+    "matched_skills": [
+      "Next.js",
+      "React.js",
+      "TypeScript",
+      "REST APIs",
+      "Tailwind CSS"
+    ],
+    "missing_skills": [
+      "AI Data Labeling pipelines"
+    ],
+    "why_matches": "Noida hybrid/WFH role focused on data intelligence platforms with Next.js.",
+    "concerns": "Data labeling operations integration.",
+    "tech_score": 27,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 9,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 88,
+    "rank": 16
+  },
+  {
+    "company": "Adastra",
+    "title": "Associate AI Engineer (React, Full Stack)",
+    "location": "Pune",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201316 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-15",
+    "source": "GetMeReferred",
+    "orig_url": "https://getmereferred.com/job-listing/fullstack-ai-engineer-hybrid-in-pune-adastra-pune-2-to-5-years-experience-8ba3a9cd-c98f-4ddb-9be4-429a247e41d2",
+    "app_url": "https://getmereferred.com/job-listing/fullstack-ai-engineer-hybrid-in-pune-adastra-pune-2-to-5-years-experience-8ba3a9cd-c98f-4ddb-9be4-429a247e41d2",
+    "matched_skills": [
+      "React",
+      "TypeScript",
+      "Full-Stack",
+      "AI Integrations",
+      "Cloud"
+    ],
+    "missing_skills": [
+      "Python data pipelines"
+    ],
+    "why_matches": "Pune hybrid opening for early career full-stack engineers interested in AI solutions.",
+    "concerns": "Data engineering background preferred.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 11,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 88,
+    "rank": 17
+  },
+  {
+    "company": "EQUIP9",
+    "title": "Junior Fullstack Developer (React / Next.js / TypeScript)",
+    "location": "Pune",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201312 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-18",
+    "source": "Cutshort",
+    "orig_url": "https://cutshort.io/jobs/mobile-app-development-jobs-in-pune",
+    "app_url": "https://cutshort.io/jobs/mobile-app-development-jobs-in-pune",
+    "matched_skills": [
+      "React.js",
+      "TypeScript",
+      "Node.js",
+      "REST APIs",
+      "PostgreSQL"
+    ],
+    "missing_skills": [
+      "React Native"
+    ],
+    "why_matches": "Pune-based product engineering role explicitly seeking 1\u20132 years fullstack developers.",
+    "concerns": "Startup pace with multidisciplinary duties.",
+    "tech_score": 27,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 8,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 87,
+    "rank": 18
+  },
+  {
+    "company": "Tripare AI",
+    "title": "Frontend / AI Integration Engineer (React, TypeScript)",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-27",
+    "source": "Shine",
+    "orig_url": "https://www.shine.com/job-search/typescript-jobs-in-noida",
+    "app_url": "https://www.shine.com/job-search/typescript-jobs-in-noida",
+    "matched_skills": [
+      "React.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "REST APIs",
+      "AI Tools"
+    ],
+    "missing_skills": [
+      "Prompt evaluation"
+    ],
+    "why_matches": "Noida hybrid AI startup creating user interfaces for LLM products.",
+    "concerns": "Salary bracket is mid-tier.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 10,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 87,
+    "rank": 19
+  },
+  {
+    "company": "Sadhana IT Solutions",
+    "title": "Junior Software Engineer (React / Next.js / TypeScript)",
+    "location": "Pune",
+    "work_mode": "Hybrid",
+    "exp": "0\u20132 Years",
+    "salary": "\u20b98\u201312 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-26",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-remote-react-js-l-pune,-maharashtra-jobs.html",
+    "app_url": "https://in.indeed.com/q-remote-react-js-l-pune,-maharashtra-jobs.html",
+    "matched_skills": [
+      "React.js",
+      "TypeScript",
+      "Next.js",
+      "REST APIs",
+      "Tailwind CSS"
+    ],
+    "missing_skills": [
+      "Redux Toolkit"
+    ],
+    "why_matches": "Pune-based hybrid opening for freshers to 2 years experience with React/Next.js.",
+    "concerns": "Consulting client projects.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 14,
+    "ai_score": 7,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 85,
+    "rank": 20
+  },
+  {
+    "company": "Right Advisors / Fintech Client",
+    "title": "Full Stack Developer (React.js, Node.js, Next.js)",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b910\u201314 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-20",
+    "source": "Shine",
+    "orig_url": "https://www.shine.com/job-search/typescript-jobs-in-noida",
+    "app_url": "https://www.shine.com/job-search/typescript-jobs-in-noida",
+    "matched_skills": [
+      "React.js",
+      "Node.js",
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL / MySQL",
+      "RBAC"
+    ],
+    "missing_skills": [
+      "Micro-frontend federations"
+    ],
+    "why_matches": "Noida hybrid role in fintech domain with Node.js and Next.js requirements.",
+    "concerns": "Agency recruiter posting.",
+    "tech_score": 27,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 6,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 84,
+    "rank": 21
+  },
+  {
+    "company": "Appcurators",
+    "title": "MERN & Next.js Full Stack Developer",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "0\u20132 Years",
+    "salary": "\u20b98\u201312 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-17",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-node-js-react-full-stack-l-noida,-uttar-pradesh-jobs.html",
+    "app_url": "https://in.indeed.com/q-node-js-react-full-stack-l-noida,-uttar-pradesh-jobs.html",
+    "matched_skills": [
+      "React.js",
+      "Node.js",
+      "Next.js",
+      "REST APIs",
+      "Express.js",
+      "PostgreSQL"
+    ],
+    "missing_skills": [
+      "MongoDB"
+    ],
+    "why_matches": "Early-career developer role (0\u20132 YOE) in Noida with hybrid flexibility.",
+    "concerns": "Base salary starts around \u20b98 LPA.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 6,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 83,
+    "rank": 22
+  },
+  {
+    "company": "Flexiple Client Network",
+    "title": "Next.js Full Stack Engineer (App Router, Node.js)",
+    "location": "Remote (India)",
+    "work_mode": "Fully Remote",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b912\u201316 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-22",
+    "source": "Flexiple",
+    "orig_url": "https://flexiple.com/hire/nextjs/bengaluru",
+    "app_url": "https://flexiple.com/hire/nextjs/bengaluru",
+    "matched_skills": [
+      "Next.js (App Router)",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL"
+    ],
+    "missing_skills": [
+      "GraphQL Apollo"
+    ],
+    "why_matches": "Vetted network matching early-career Next.js specialists with remote product teams.",
+    "concerns": "Contract-to-hire engagement tracks.",
+    "tech_score": 26,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 6,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 83,
+    "rank": 23
+  },
+  {
+    "company": "Persistent Systems",
+    "title": "Associate Software Engineer (React & Node.js)",
+    "location": "Pune",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201312 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-23",
+    "source": "Indeed",
+    "orig_url": "https://in.indeed.com/q-full-stack-developer-react-node-l-pune,-maharashtra-jobs.html",
+    "app_url": "https://in.indeed.com/q-full-stack-developer-react-node-l-pune,-maharashtra-jobs.html",
+    "matched_skills": [
+      "React.js",
+      "Node.js",
+      "REST APIs",
+      "PostgreSQL",
+      "Docker",
+      "Git"
+    ],
+    "missing_skills": [
+      "Java Spring Boot"
+    ],
+    "why_matches": "Pune-based MNC with entry-to-junior engineering bands in full stack development.",
+    "concerns": "Structured service delivery hierarchies.",
+    "tech_score": 25,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 6,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 82,
+    "rank": 24
+  },
+  {
+    "company": "Trigyn Technologies",
+    "title": "Software Engineer (React, Node.js, Cloud)",
+    "location": "Noida",
+    "work_mode": "Hybrid",
+    "exp": "1\u20132 Years",
+    "salary": "\u20b98\u201312 LPA",
+    "type": "Full-time",
+    "posted": "2026-10-26",
+    "source": "Shine",
+    "orig_url": "https://www.shine.com/job-search/typescript-jobs-in-noida",
+    "app_url": "https://www.shine.com/job-search/typescript-jobs-in-noida",
+    "matched_skills": [
+      "React.js",
+      "Node.js",
+      "Docker",
+      "REST APIs",
+      "SQL"
+    ],
+    "missing_skills": [
+      "Kubernetes administration"
+    ],
+    "why_matches": "Established systems integrator in Noida offering hybrid role for junior engineers.",
+    "concerns": "Mixed enterprise client stacks.",
+    "tech_score": 25,
+    "exp_score": 20,
+    "role_score": 13,
+    "ai_score": 5,
+    "loc_score": 10,
+    "comp_score": 4,
+    "pot_score": 4,
+    "match_score": 81,
+    "rank": 25
+  }
+];
+
+    // Auto-fetch newest jobs dynamically from Google Sheet if accessible
+    const SHEET_ID = '1E6eu5vzQ95InC8XUzFQ5LLP48oWjALIyU8gfEJWDpVI';
+    const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Job%20Match%20Portal`;
+
+    async function tryFetchSheetData() {
+      try {
+        const res = await fetch(GVIZ_URL);
+        if (!res.ok) return;
+        const text = await res.text();
+        const jsonStr = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+        const gviz = JSON.parse(jsonStr);
+        if (gviz && gviz.table && gviz.table.rows && gviz.table.rows.length > 7) {
+          const sheetRows = gviz.table.rows.slice(7); // data starts after header rows
+          const parsedJobs = [];
+          sheetRows.forEach((r, idx) => {
+            const c = r.c;
+            if (c && c[0] && c[2] && c[3]) {
+              const rank = c[0] ? (c[0].v || idx + 1) : idx + 1;
+              const scoreRaw = c[1] ? c[1].v : 0;
+              const score = typeof scoreRaw === 'number' ? Math.round(scoreRaw <= 1 ? scoreRaw * 100 : scoreRaw) : parseInt(scoreRaw) || 85;
+              const company = c[2] ? (c[2].v || '') : '';
+              const title = c[3] ? (c[3].v || '') : '';
+              const location = c[4] ? (c[4].v || '') : 'Remote';
+              const work_mode = c[5] ? (c[5].v || '') : 'Hybrid';
+              const exp = c[6] ? (c[6].v || '') : '0–2 Years';
+              const salary = c[7] ? (c[7].v || '') : '₹8 LPA+';
+              const app_url = c[8] ? (c[8].v || '#') : '#';
+              const matched_skills = c[9] ? (c[9].v || '').split(',').map(s=>s.trim()).filter(Boolean) : ['Next.js', 'React', 'TypeScript'];
+              const why_matches = c[10] ? (c[10].v || '') : 'Strong fit for candidate skills.';
+              const status = c[11] ? (c[11].v || 'New Match') : 'New Match';
+
+              parsedJobs.push({
+                rank: parseInt(rank),
+                match_score: score,
+                company: company,
+                title: title,
+                location: location,
+                work_mode: work_mode,
+                exp: exp,
+                salary: salary,
+                posted: '2026-11-02',
+                app_url: app_url,
+                matched_skills: matched_skills,
+                missing_skills: [],
+                why_matches: why_matches,
+                concerns: 'Review listing details.',
+                status: status
+              });
+            }
+          });
+          if (parsedJobs.length >= 10) {
+            jobsData = parsedJobs;
+            console.log('Successfully refreshed from Google Sheet API:', jobsData.length, 'jobs');
+            loadSavedStatuses();
+            renderJobs();
+          }
+        }
+      } catch(err) {
+        console.log('Using preloaded cache:', err);
+      }
+    }
+
+    function loadSavedStatuses() {
+      const saved = localStorage.getItem('spark_job_statuses');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          jobsData.forEach(j => {
+            const key = j.company + '_' + j.title;
+            if (parsed[key]) {
+              j.status = parsed[key];
+            }
+          });
+        } catch(e) {
+          console.error(e);
+        }
+      }
+    }
+
+    function saveStatus(company, title, newStatus) {
+      let saved = {};
+      try {
+        saved = JSON.parse(localStorage.getItem('spark_job_statuses')) || {};
+      } catch(e) {}
+      saved[company + '_' + title] = newStatus;
+      localStorage.setItem('spark_job_statuses', JSON.stringify(saved));
+      
+      const job = jobsData.find(j => j.company === company && j.title === title);
+      if (job) job.status = newStatus;
+    }
+
+    function renderJobs() {
+      const grid = document.getElementById('jobsGrid');
+      const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+      const locVal = document.getElementById('locFilter').value;
+      const scoreVal = document.getElementById('scoreFilter').value;
+      const modeVal = document.getElementById('modeFilter').value;
+      const statusVal = document.getElementById('statusFilter').value;
+      const sortVal = document.getElementById('sortSelect').value;
+
+      let filtered = jobsData.filter(job => {
+        if (searchVal) {
+          const text = (job.company + ' ' + job.title + ' ' + job.location + ' ' + job.matched_skills.join(' ') + ' ' + job.why_matches).toLowerCase();
+          if (!text.includes(searchVal)) return false;
+        }
+        if (locVal !== 'all') {
+          if (locVal === 'Remote' && !job.location.toLowerCase().includes('remote') && !job.work_mode.toLowerCase().includes('remote')) return false;
+          if (locVal === 'Noida' && !job.location.toLowerCase().includes('noida') && !job.location.toLowerCase().includes('delhi')) return false;
+          if (locVal === 'Pune' && !job.location.toLowerCase().includes('pune')) return false;
+        }
+        if (scoreVal !== 'all') {
+          const minScore = parseInt(scoreVal);
+          if (minScore === 90 && job.match_score < 90) return false;
+          if (minScore === 80 && (job.match_score < 80 || job.match_score >= 90)) return false;
+          if (minScore === 70 && (job.match_score < 70 || job.match_score >= 80)) return false;
+        }
+        if (modeVal !== 'all') {
+          if (modeVal === 'Remote' && !job.work_mode.toLowerCase().includes('remote') && !job.work_mode.toLowerCase().includes('wfh')) return false;
+          if (modeVal === 'Hybrid' && !job.work_mode.toLowerCase().includes('hybrid')) return false;
+        }
+        if (statusVal !== 'all') {
+          const currentStatus = job.status || 'New Match';
+          if (statusVal === 'active') {
+            if (['Expired / Closed', 'Link Broken', 'Not Interested', 'Rejected'].includes(currentStatus)) return false;
+          } else if (currentStatus !== statusVal) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      if (sortVal === 'score-desc') {
+        filtered.sort((a,b) => b.match_score - a.match_score);
+      } else if (sortVal === 'rank-asc') {
+        filtered.sort((a,b) => a.rank - b.rank);
+      } else if (sortVal === 'company-asc') {
+        filtered.sort((a,b) => a.company.localeCompare(b.company));
+      } else if (sortVal === 'date-desc') {
+        filtered.sort((a,b) => new Date(b.posted) - new Date(a.posted));
+      }
+
+      document.getElementById('displayedCount').textContent = filtered.length;
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8; font-size: 14px;">No jobs found matching the selected filters.</div>';
+        return;
+      }
+
+      filtered.forEach(job => {
+        const isTop5 = job.rank <= 5;
+        let scoreClass = 'score-good';
+        if (job.match_score >= 90) scoreClass = 'score-excellent';
+        else if (job.match_score >= 80) scoreClass = 'score-strong';
+
+        const card = document.createElement('div');
+        const isInactive = ['Expired / Closed', 'Link Broken', 'Not Interested', 'Rejected'].includes(job.status);
+        card.className = `job-card ${isTop5 ? 'top5-highlight' : ''} ${isInactive ? 'is-inactive' : ''}`;
+
+        card.innerHTML = `
+          <div class="card-header">
+            <span class="card-rank">Rank #${job.rank} ${isTop5 ? '⭐ TOP 5 PICK' : ''}</span>
+            <span class="score-badge ${scoreClass}">⚡ ${job.match_score}% Match</span>
+          </div>
+
+          <div class="job-title">${job.title}</div>
+          <div class="job-company">${job.company}</div>
+
+          <div class="job-meta-row">
+            <div class="job-meta-item" title="${job.location}">📍 ${job.location}</div>
+            <div class="job-meta-item" title="${job.work_mode}">🏠 ${job.work_mode}</div>
+            <div class="job-meta-item" title="${job.exp}">💼 ${job.exp}</div>
+            <div class="job-meta-item" title="${job.salary}">💰 ${job.salary}</div>
+          </div>
+
+          <div class="skills-section">
+            <div class="skills-title">Matched Skills</div>
+            <div class="skills-tags">
+              ${job.matched_skills.map(s => `<span class="skill-tag skill-matched">${s}</span>`).join('')}
+            </div>
+            ${job.missing_skills && job.missing_skills.length ? `
+              <div class="skills-title">Missing / Stretch</div>
+              <div class="skills-tags">
+                ${job.missing_skills.map(s => `<span class="skill-tag skill-missing">${s}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="ai-explanation">
+            <strong>Why it matches:</strong> ${job.why_matches}
+          </div>
+
+          ${job.concerns ? `
+            <div class="concern-box">
+              <strong>Consideration:</strong> ${job.concerns}
+            </div>
+          ` : ''}
+
+          <div class="card-footer">
+            <select class="status-select" onchange="handleStatusChange('${job.company.replace(/'/g, "\'")}', '${job.title.replace(/'/g, "\'")}', this.value)">
+              <option value="New Match" ${(!job.status || job.status === 'New Match') ? 'selected' : ''}>⚡ New Match</option>
+              <option value="Saved" ${job.status === 'Saved' ? 'selected' : ''}>⭐ Saved</option>
+              <option value="Applied" ${job.status === 'Applied' ? 'selected' : ''}>✅ Applied</option>
+              <option value="Interview Scheduled" ${job.status === 'Interview Scheduled' ? 'selected' : ''}>📅 Interview Scheduled</option>
+              <option value="Offer" ${job.status === 'Offer' ? 'selected' : ''}>🎉 Offer Received</option>
+              <option value="Expired / Closed" ${job.status === 'Expired / Closed' ? 'selected' : ''}>⏳ Expired / Closed</option>
+              <option value="Link Broken" ${job.status === 'Link Broken' ? 'selected' : ''}>⚠️ Link Broken / 404</option>
+              <option value="Not Interested" ${job.status === 'Not Interested' ? 'selected' : ''}>🚫 Not Interested</option>
+              <option value="Rejected" ${job.status === 'Rejected' ? 'selected' : ''}>❌ Rejected</option>
+            </select>
+
+            <a href="${job.app_url}" target="_blank" class="apply-btn">
+              Apply Now ↗
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function handleStatusChange(company, title, newStatus) {
+      saveStatus(company, title, newStatus);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderJobs);
+    document.getElementById('locFilter').addEventListener('change', renderJobs);
+    document.getElementById('scoreFilter').addEventListener('change', renderJobs);
+    document.getElementById('modeFilter').addEventListener('change', renderJobs);
+    document.getElementById('statusFilter').addEventListener('change', renderJobs);
+    document.getElementById('sortSelect').addEventListener('change', renderJobs);
+
+    document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('locFilter').value = 'all';
+      document.getElementById('scoreFilter').value = 'all';
+      document.getElementById('modeFilter').value = 'all';
+      document.getElementById('statusFilter').value = 'all';
+      document.getElementById('sortSelect').value = 'score-desc';
+      renderJobs();
+    });
+
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.style.display = 'flex';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    });
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    loadSavedStatuses();
+    renderJobs();
+    tryFetchSheetData();
+  </script>
+</body>
+</html>
