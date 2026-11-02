@@ -714,22 +714,22 @@
     <div class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-label">Filtered Jobs</div>
-        <div class="kpi-value" id="kpiFiltered">25</div>
+        <div class="kpi-value" id="kpiFiltered">0</div>
         <div class="kpi-desc">Noida, Gurgaon, Delhi, Hybrid, WFH</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Top 25 Ranked</div>
-        <div class="kpi-value" id="kpiTotal">25</div>
+        <div class="kpi-label">Total Opportunities</div>
+        <div class="kpi-value" id="kpiTotal">0</div>
         <div class="kpi-desc">Playwright, SDET & QA Roles</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Top Match</div>
-        <div class="kpi-value" id="kpiTopMatch">96%</div>
+        <div class="kpi-value" id="kpiTopMatch">0%</div>
         <div class="kpi-desc">Senior QA Automation Engineer</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Average Score</div>
-        <div class="kpi-value" id="kpiAvgMatch">89.2%</div>
+        <div class="kpi-value" id="kpiAvgMatch">0%</div>
         <div class="kpi-desc">Across matched positions</div>
       </div>
       <div class="kpi-card">
@@ -789,6 +789,9 @@
             <option value="Applied">Applied</option>
             <option value="Interview Scheduled">Interview Scheduled</option>
             <option value="Offer">Offer</option>
+            <option value="Expired / Closed">Expired / Closed</option>
+            <option value="Link Broken">Link Broken / 404</option>
+            <option value="Not Interested">Not Interested</option>
           </select>
         </div>
         <div class="filter-item">
@@ -802,12 +805,16 @@
         </div>
       </div>
       <div class="results-count-bar">
-        <div>Showing <strong id="displayedCount">25</strong> of 25 Opportunities</div>
+        <div>Showing <strong id="displayedCount">0</strong> of <span id="totalCount">0</span> Opportunities</div>
         <button id="clearFiltersBtn" class="clear-filters-btn">Reset Filters</button>
       </div>
     </div>
 
-    <div class="jobs-grid" id="jobsGrid"></div>
+    <div class="jobs-grid" id="jobsGrid">
+      <div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #94a3b8; font-size: 15px;">
+        🔄 Loading live job opportunities from Google Sheet...
+      </div>
+    </div>
 
     <div class="insights-panel">
       <h2>🧠 QA Career Intelligence & Strategy</h2>
@@ -853,123 +860,43 @@
   <button id="scrollTopBtn" class="scroll-top-btn" title="Back to Top">↑</button>
 
   <script>
-    let jobsData = [
-      {
-        "rank": 1,
-        "match_score": 96,
-        "company": "Six Dee Netad Solutions",
-        "title": "Senior QA Automation Engineer (Playwright & TypeScript)",
-        "location": "Noida / Remote",
-        "work_mode": "Hybrid / WFH",
-        "exp": "6+ Years",
-        "salary": "₹15–22 LPA",
-        "posted": "2026-11-02",
-        "app_url": "https://www.linkedin.com/jobs/",
-        "matched_skills": ["Playwright", "TypeScript", "POM", "API Testing", "SQL", "Power BI"],
-        "missing_skills": ["Docker CI"],
-        "why_matches": "Direct alignment with your current stack, framework design, and dashboard validation expertise.",
-        "concerns": "None.",
-        "status": "New Match"
-      },
-      {
-        "rank": 2,
-        "match_score": 95,
-        "company": "ZigWheels / GirnarSoft",
-        "title": "QA Lead / SDET (Playwright, API & Automation)",
-        "location": "Gurgaon / Noida",
-        "work_mode": "Hybrid",
-        "exp": "5–8 Years",
-        "salary": "₹14–20 LPA",
-        "posted": "2026-11-01",
-        "app_url": "https://www.zigwheels.com/careers",
-        "matched_skills": ["Playwright", "TypeScript", "Postman", "JIRA", "Manual & Functional"],
-        "missing_skills": ["Selenium Java"],
-        "why_matches": "Extensive past domain experience in automotive web portals and robust test automation frameworks.",
-        "concerns": "Fast release cycles.",
-        "status": "New Match"
-      },
-      {
-        "rank": 3,
-        "match_score": 93,
-        "company": "mFilterIt",
-        "title": "Data Quality & Automation Analyst",
-        "location": "Noida",
-        "work_mode": "Hybrid",
-        "exp": "5+ Years",
-        "salary": "₹12–18 LPA",
-        "posted": "2026-10-30",
-        "app_url": "https://www.mfilterit.com/careers",
-        "matched_skills": ["Power BI", "SQL", "Data Validation", "Python", "API Testing"],
-        "missing_skills": ["Spark"],
-        "why_matches": "Matches your specific experience with Power BI dashboards, SQL verification, and analytics testing.",
-        "concerns": "Data pipeline scale.",
-        "status": "New Match"
-      },
-      {
-        "rank": 4,
-        "match_score": 92,
-        "company": "TechMahindra",
-        "title": "SDET / Playwright Automation Specialist",
-        "location": "Noida / Delhi NCR",
-        "work_mode": "Hybrid",
-        "exp": "5–8 Years",
-        "salary": "₹12–16 LPA",
-        "posted": "2026-10-28",
-        "app_url": "https://www.techmahindra.com/careers",
-        "matched_skills": ["Playwright", "TypeScript", "API Testing", "CI/CD Jenkins", "Agile"],
-        "missing_skills": ["C#"],
-        "why_matches": "Strong enterprise QA role matching your test planning and execution capabilities.",
-        "concerns": "Large team coordination.",
-        "status": "New Match"
-      },
-      {
-        "rank": 5,
-        "match_score": 91,
-        "company": "Airtel Digital",
-        "title": "Lead Quality Assurance Engineer",
-        "location": "Gurgaon",
-        "work_mode": "Hybrid",
-        "exp": "6+ Years",
-        "salary": "₹16–24 LPA",
-        "posted": "2026-10-25",
-        "app_url": "https://www.airtel.in/careers",
-        "matched_skills": ["API Testing", "Postman", "Automation Frameworks", "SQL", "JIRA"],
-        "missing_skills": ["Mobile App Appium"],
-        "why_matches": "High compensation hybrid role in Gurgaon focusing on end-to-end telecom platform quality.",
-        "concerns": "Heavy enterprise processes.",
-        "status": "New Match"
-      }
-    ];
+    // NO FALLBACK DUMMY DATA. Strictly loads live from Google Sheet.
+    let jobsData = [];
 
     const SHEET_ID = '1o_euZMycyW9rWLMt0IgJOUjliYcj4oTdbVcK3yV-wvg';
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Job%20Match%20Portal`;
 
-    async function tryFetchSheetData() {
+    async function fetchLiveSheetData() {
       try {
         const res = await fetch(GVIZ_URL);
-        if (!res.ok) return;
+        if (!res.ok) throw new Error('Network response was not ok');
         const text = await res.text();
         const jsonStr = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
         const gviz = JSON.parse(jsonStr);
+        
         if (gviz && gviz.table && gviz.table.rows && gviz.table.rows.length > 5) {
           const sheetRows = gviz.table.rows.slice(5);
           const parsedJobs = [];
+          
           sheetRows.forEach((r, idx) => {
             const c = r.c;
-            if (c && c[0] && c[2] && c[3]) {
-              const rank = c[0] ? (c[0].v || idx + 1) : idx + 1;
-              const scoreRaw = c[1] ? c[1].v : 0;
-              const score = typeof scoreRaw === 'number' ? Math.round(scoreRaw <= 1 ? scoreRaw * 100 : scoreRaw) : parseInt(scoreRaw) || 85;
-              const company = c[2] ? (c[2].v || '') : '';
-              const title = c[3] ? (c[3].v || '') : '';
-              const location = c[4] ? (c[4].v || '') : 'Noida / Gurgaon';
-              const work_mode = c[5] ? (c[5].v || '') : 'Hybrid';
-              const exp = c[6] ? (c[6].v || '') : '6+ Years';
-              const salary = c[7] ? (c[7].v || '') : '₹12–18 LPA';
-              const app_url = c[8] ? (c[8].v || '#') : '#';
-              const matched_skills = c[9] ? (c[9].v || '').split(',').map(s=>s.trim()).filter(Boolean) : ['Playwright', 'TypeScript'];
-              const why_matches = c[10] ? (c[10].v || '') : 'Strong match for QA automation background.';
-              const status = c[11] ? (c[11].v || 'New Match') : 'New Match';
+            if (!c) return;
+            
+            const company = c[3] ? (c[3].v || '') : '';
+            const title = c[4] ? (c[4].v || '') : '';
+            
+            if (company || title) {
+              const rank = c[1] ? (c[1].v || idx + 1) : idx + 1;
+              const scoreRaw = c[2] ? c[2].v : 85;
+              const score = typeof scoreRaw === 'number' ? Math.round(scoreRaw <= 1 ? scoreRaw * 100 : scoreRaw) : (parseInt(scoreRaw) || 85);
+              const location = c[5] ? (c[5].v || 'Noida / Gurgaon') : 'Noida / Gurgaon';
+              const work_mode = c[6] ? (c[6].v || 'Hybrid') : 'Hybrid';
+              const exp = c[7] ? (c[7].v || '5+ Years') : '5+ Years';
+              const salary = c[8] ? (c[8].v || '₹12–18 LPA') : '₹12–18 LPA';
+              const app_url = c[9] ? (c[9].v || '#') : '#';
+              const matched_skills = c[10] ? (c[10].v || '').split(',').map(s=>s.trim()).filter(Boolean) : ['Playwright', 'TypeScript'];
+              const why_matches = c[11] ? (c[11].v || 'Strong QA Automation match.') : 'Strong QA Automation match.';
+              const status = c[12] ? (c[12].v || 'New Match') : 'New Match';
 
               parsedJobs.push({
                 rank: parseInt(rank),
@@ -985,19 +912,22 @@
                 matched_skills: matched_skills,
                 missing_skills: [],
                 why_matches: why_matches,
-                concerns: 'Review listing requirements.',
+                concerns: 'Review listing details.',
                 status: status
               });
             }
           });
-          if (parsedJobs.length >= 3) {
-            jobsData = parsedJobs;
-            loadSavedStatuses();
-            renderJobs();
-          }
+
+          jobsData = parsedJobs;
+          loadSavedStatuses();
+          updateKPIs();
+          renderJobs();
+        } else {
+          document.getElementById('jobsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #f87171;">No job records found in the Google Sheet database.</div>';
         }
       } catch(err) {
-        console.log('Using preloaded cache:', err);
+        console.error('Error fetching live sheet data:', err);
+        document.getElementById('jobsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #f87171;">Failed to load live Google Sheet data. Please check connection or sharing permissions.</div>`;
       }
     }
 
@@ -1023,6 +953,31 @@
       localStorage.setItem('spark_job_statuses', JSON.stringify(saved));
       const job = jobsData.find(j => j.company === company && j.title === title);
       if (job) job.status = newStatus;
+      
+      // Smart sort: Push applied / resolved / closed to bottom, keep active on top
+      sortJobsData();
+      renderJobs();
+    }
+
+    function sortJobsData() {
+      const bottomStatuses = ['Applied', 'Interview Scheduled', 'Offer', 'Expired / Closed', 'Link Broken', 'Not Interested'];
+      jobsData.sort((a, b) => {
+        const aBottom = bottomStatuses.includes(a.status);
+        const bBottom = bottomStatuses.includes(b.status);
+        if (aBottom && !bBottom) return 1;
+        if (!aBottom && bBottom) return -1;
+        return b.match_score - a.match_score;
+      });
+    }
+
+    function updateKPIs() {
+      document.getElementById('kpiTotal').textContent = jobsData.length;
+      if (jobsData.length > 0) {
+        const topMatch = Math.max(...jobsData.map(j => j.match_score));
+        const avgMatch = Math.round(jobsData.reduce((acc, j) => acc + j.match_score, 0) / jobsData.length);
+        document.getElementById('kpiTopMatch').textContent = topMatch + '%';
+        document.getElementById('kpiAvgMatch').textContent = avgMatch + '%';
+      }
     }
 
     function renderJobs() {
@@ -1054,7 +1009,7 @@
         if (statusVal !== 'all') {
           const currentStatus = job.status || 'New Match';
           if (statusVal === 'active') {
-            if (['Rejected', 'Not Interested'].includes(currentStatus)) return false;
+            if (['Expired / Closed', 'Link Broken', 'Not Interested'].includes(currentStatus)) return false;
           } else if (currentStatus !== statusVal) {
             return false;
           }
@@ -1068,6 +1023,8 @@
       else if (sortVal === 'date-desc') filtered.sort((a,b) => new Date(b.posted) - new Date(a.posted));
 
       document.getElementById('displayedCount').textContent = filtered.length;
+      document.getElementById('kpiFiltered').textContent = filtered.length;
+      document.getElementById('totalCount').textContent = jobsData.length;
       grid.innerHTML = '';
 
       if (filtered.length === 0) {
@@ -1075,8 +1032,8 @@
         return;
       }
 
-      filtered.forEach(job => {
-        const isTop5 = job.rank <= 5;
+      filtered.forEach((job, index) => {
+        const isTop5 = index < 5 && (!job.status || job.status === 'New Match' || job.status === 'Saved');
         let scoreClass = 'score-good';
         if (job.match_score >= 90) scoreClass = 'score-excellent';
         else if (job.match_score >= 80) scoreClass = 'score-strong';
@@ -1086,7 +1043,7 @@
 
         card.innerHTML = `
           <div class="card-header">
-            <span class="card-rank">Rank #${job.rank} ${isTop5 ? '⭐ TOP MATCH' : ''}</span>
+            <span class="card-rank">Rank #${job.rank} ${isTop5 ? '⭐ TOP PRIORITY' : ''}</span>
             <span class="score-badge ${scoreClass}">⚡ ${job.match_score}% Match</span>
           </div>
 
@@ -1118,6 +1075,9 @@
               <option value="Applied" ${job.status === 'Applied' ? 'selected' : ''}>✅ Applied</option>
               <option value="Interview Scheduled" ${job.status === 'Interview Scheduled' ? 'selected' : ''}>📅 Interview Scheduled</option>
               <option value="Offer" ${job.status === 'Offer' ? 'selected' : ''}>🎉 Offer Received</option>
+              <option value="Expired / Closed" ${job.status === 'Expired / Closed' ? 'selected' : ''}>❌ Expired / Closed</option>
+              <option value="Link Broken" ${job.status === 'Link Broken' ? 'selected' : ''}>⚠️ Link Broken</option>
+              <option value="Not Interested" ${job.status === 'Not Interested' ? 'selected' : ''}>🚫 Not Interested</option>
             </select>
 
             <a href="${job.app_url}" target="_blank" class="apply-btn">
@@ -1154,9 +1114,8 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    loadSavedStatuses();
-    renderJobs();
-    tryFetchSheetData();
+    // Run live fetch on load
+    fetchLiveSheetData();
   </script>
 </body>
 </html>
